@@ -4,10 +4,10 @@ const router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.json({
-        success: true, 
-        route: "blogs",
-        message: "Welcome to the blogs page"
-      })
+        sucess: true, 
+        route: "blogs", 
+        message:"welcome to the blogs page"});
+
 });
 
 module.exports = router;
