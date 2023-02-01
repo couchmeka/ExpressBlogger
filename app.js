@@ -10,6 +10,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const blogsRouter = require('./routes/blogs');
 
+
 //instantiate the actual express app
 //const port = 3001;
 const app = express();
@@ -32,6 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/blogs', blogsRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
