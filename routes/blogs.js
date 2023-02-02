@@ -161,7 +161,7 @@ router.get('/all', (req, res) => {
                 // return;
               }
           
-              blogList.push(blogData);
+              blogs.push(blogData);
           
               console.log("blogs ", blogList);
           
@@ -177,5 +177,93 @@ router.get('/all', (req, res) => {
               });
             }
           });
+
+
+
+
+
+
+          router.put('/update-one/:blogTitle', (req, res)=>{
+
+            const blogToFind = req.params.blogTitle
+            
+            
+            const originalBlog = blogs.find((blog)=>{
+
+              return blog.title === blogToFind
+            })
+    
+            const blogIndex = blogs.findIndex((blog)=>{
+
+              return blog.title === blogToFind
+            })
+          
+            if (!originalBlog) {
+              res.json({
+                success: false,
+                message: "Could not find blog"
+              })
+              return
+            }
+          
+            const updatedBlog = {}
+    
+            if (req.body.title !== undefined){
+                updatedBlog.title = req.body.title
+              } else {
+                updatedBlog.title = originalBlog.title
+              }
+            
+              if (req.body.text !== undefined){
+                updatedBlog.text = req.body.text
+              } else {
+                updatedBlog.text = originalBlog.text
+              }
+            
+              if (req.body.author !== undefined){
+                updatedBlog.author = req.body.author
+              } else {
+                updatedBlog.author = originalBlog.author
+              }
+              if (req.body.category !== undefined){
+                updatedBlog.category = req.body.category
+              } else {
+                updatedBlog.category = originalBlog.category
+              }
+          
+              updatedBlog.createdAt = new Date
+              updatedBlog.lastModified = new Date
+
+          try {
+
+            const blogDataCheck = validateBlogs(updatedBlog);
+          
+            if (blogDataCheck.isValid === false) {
+              throw Error(blogDataCheck.message)
+              // res.json({
+              //   success: false,
+              //   message: userDataCheck.message,
+              // });
+              // return;
+          }
+
+        } catch (e) {
+          // In the catch block, we always want to do 2 things: console.log the error and respond with an error object
+          console.log(e);
+          res.json({
+            success: false,
+            error: String(e)
+          });
+        }
+            blogs[blogIndex] = updatedBlog
+
+            console.log(blogs)
+            res.json({
+              success: true,
+              updatedBlog: updatedBlog,
+              blogs: blogs
+              
+            })
+          })
 
 module.exports = router;
