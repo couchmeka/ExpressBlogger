@@ -48,12 +48,41 @@ const validateUserData = (userData) => {
 	}
 
 	// Since all array's in JS are objects behind the scenes, typeof(array) will return 'object'. So in order to verify that the variable is actually an array, we have to do the Array.isArray() check.
-	if (userData.favoriteFoods === undefined || !Array.isArray(userData.favoriteFoods) || userData.favoriteFoods.length === 0) {
+
+	let isValid = true;
+	
+	userData.favoriteFoods.forEach(food => {
+		
+		
+
+		if (typeof(food) !== "string" ) {
+			
+				isValid = false;
+
+			
+			}
+
+		
+	});
+
+	if (isValid === false){
+            
+		return {
+		isValid: false,
+		message: "Food must be of type string"
+		}
+	  }
+	
+	
+	if (userData.favoriteFoods === undefined || !Array.isArray(userData.favoriteFoods) || userData.favoriteFoods.length === 0 ) {
 		return {
 			isValid: false,
 			message: "favorite foods must be an array and must have length"
 		}
 	}
+
+	
+	
 
 	// We are going to use .filter() to iterate through favoriteFoods and will only bring through values that are NOT strings. Then we will check if the resultant array has any length, in which case we know there are non-string values in the array.
 	const nonStringFoods = userData.favoriteFoods.filter((favoriteFood)=>{

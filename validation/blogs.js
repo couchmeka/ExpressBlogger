@@ -47,6 +47,47 @@ const validateBlogs = (blogData) => {
 		}
 	}
 
+    
+
+    
+       let newArrayCategories = ["Lorem", "ipsum", "dolor", "sit", "amet"]
+       let isValid = true
+
+        
+          blogData.category.forEach(category => {
+            
+            console.log(category)
+            if(!newArrayCategories.includes(category)){
+              
+                isValid = false
+                
+                
+            }
+            
+          });
+
+          if (isValid === false){
+            
+            return {
+            isValid: false,
+            message: "category must be of type string and must include categories Lorem, ipsum, dolor, sit, amet"
+            }
+          }
+             
+            
+    
+    
+    
+
+    if (blogData.category.length > 10) {
+		// age is NOT required, so first we check to see if it even exists before checking to see if the type is anything except 'number'
+		return {
+			isValid: false,
+			message: "You can only have less than 10 categories per submission and catagories must be of type Lorem, ipsum, dolor, sit or amet "
+		}
+	}
+
+
 
 	// We are going to use .filter() to iterate through favoriteFoods and will only bring through values that are NOT strings. Then we will check if the resultant array has any length, in which case we know there are non-string values in the array.
 	const newBlogData = blogData.category.filter((blogs)=>{
@@ -73,8 +114,12 @@ const validateBlogs = (blogData) => {
 	}
 }
 
+
+
+
+
 module.exports = {
 	// These two lines are equivalent because the variable name and the key for the object are the same name. Typically, we write the short-hand version.
 	// validateUserData: validateUserData
-	validateBlogs,
+	validateBlogs, 
 }

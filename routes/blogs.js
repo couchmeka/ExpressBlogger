@@ -66,20 +66,29 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/all', (req, res) => {
-    
+  
+  const url = req.baseUrl
+  console.log(url)
 
+console.log(parameters)
     const allblogs = blogs.map((eachblog) =>{
     
           return eachblog
       })
-        
+
+
         res.json({
     
             success: true,
             allMovies: allblogs
         })
       
-      })
+ })
+
+
+
+
+
 
       router.get('/single-blog/:titleToGet', (req, res) => {
     
