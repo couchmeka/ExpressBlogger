@@ -1,3 +1,5 @@
+const { v4: uuidv4 } = require("uuid");
+uuidv4();
 const express = require('express');
 const router = express.Router();
 
@@ -67,7 +69,6 @@ router.get('/get-one', async function (req, res, next) {
   const queryFind = await db()
   .collection('sample_blogs')
   .find({title: title})
-  .limit(5)
   .toArray(function (err, result) {
       if (err) {
         res.status(400).send('Error fetching listings!');
@@ -90,14 +91,13 @@ router.get('/get-one', async function (req, res, next) {
 
 
 
-router.get('/single-blog/:titleToGet', async function (req, res, next) {
+router.get('/single-blog/:id', async function (req, res, next) {
     
- const titleToGet = req.params.titleToGet
+ const idToGet = req.params.id
     
   const queryFind = await db()
   .collection('sample_blogs')
-  .find({title: titleToGet})
-  .limit(5)
+  .find({title: idToGet})
   .toArray(function (err, result) {
       if (err) {
         res.status(400).send('Error fetching listings!');
@@ -122,7 +122,6 @@ router.delete('/delete/:titleToDelete', async function (req,res, next) {
   const queryFind = await db()
   .collection('sample_blogs')
   .deleteOne({title: blogToDelete})
-  .limit(5)
   .toArray(function (err, result) {
       if (err) {
       res.status(400).send('Error fetching listings!');
@@ -156,6 +155,7 @@ router.post("/create-one", async function (req, res, next) {
           
               //create userData object fields
               const blogData = {
+                id: uuidv4(),
                 title: title,
                 text: text,
                 author: author,
